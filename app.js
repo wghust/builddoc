@@ -35,6 +35,12 @@ app.use(session({
     auto_reconnect: true,
     saveUninitialized: true
 }));
+app.use(function(req, res, next) {
+    res.locals.user = req.session.user;
+    res.locals.loggedIn = req.session.loggedIn;
+    next();
+});
+
 
 app.use('/', routes);
 app.use('/users', users);

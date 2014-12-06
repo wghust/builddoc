@@ -40,11 +40,16 @@
 						<div class="one_title">
 							<span class="one_num"><%=catindex %>.<%=blockindex%>:</span>
 							<span class="one_name"><%=block.title%></span>
-							<a href="/block/<%=block.uid%>" class="index_edit">查看</a>
+
+							<% if(locals.user) {%>
+								<% if(locals.user.uid == userid) {%>
+									<a href="/block/<%=pageid%>/<%=block.uid%>" class="index_edit">查看</a>
+								<% } %>
+							<% } %>
 						</div>
 						<% if(block.dec) { %>
 						<div class="one_dec">
-							<span>描述：<%=block.dec%></span>
+							<span><%=block.dec%></span>
 							<div class="clear"></div>
 						</div>
 						<% } %>
@@ -90,9 +95,9 @@
 
 		// auto
 		auto_right = function() {
-			var maxHeight = $(window).height()-150; 
+			var maxHeight = $(window).height()-50; 
 			$(".right_cats").css({
-				'max-height':maxHeight+'px'
+				'height':maxHeight+'px'
 			});
 		};
 		auto_right();

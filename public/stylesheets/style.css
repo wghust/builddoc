@@ -40,13 +40,14 @@ a {
 }
 .container {
 	position: relative;
-	width: 1024px;
+	/*width: 1024px;*/
+	width: 1200px;
 	margin: 0 auto;
 }
 /*object*/
 .logo {
 	float: left;
-	width: 100px;
+	/*width: 100px;*/
 	height: 50px;
 	line-height: 50px;
 	font-size: 24px;
@@ -73,17 +74,39 @@ a {
 	background-color: #3592DD;
 	color: white;
 }
+
+.userifm {
+	float: right;
+}
+.userifm ul {
+
+}
+.userifm ul li {
+	float: left;
+}
+.userifm ul li a {
+	height: 50px;
+	line-height: 50px;
+	color: black;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.userifm ul li a:hover {
+
+}
+
 .left {
 	position: relative;
 	width: 820px;
 	float: left;
 	margin-bottom: 30px;
+	margin-left: 30px;
 	/*height: 1000px;*/
 	/*background-color: white;*/
 }
 .right {
 	position: relative;
-	width: 180px;
+	width: 330px;
 	float: left;
 	margin-bottom: 30px;
 }
@@ -138,7 +161,8 @@ a {
 }
 .block .block_con a {
 	/*color: #6cd465;*/
-	color: #D2D2D2;
+	/*color: #D2D2D2;*/
+	color: #E03838;
 	text-decoration: underline;
 }
 .block .block_con a:hover {
@@ -366,7 +390,7 @@ a {
 	float: left;
 }
 .preview:active {
-	box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+	box-shadow: 0 1px 2px #B2B2B2 inset;
 }
 .useagepanel {
 	position: relative;
@@ -384,13 +408,13 @@ a {
 	background-image: -webkit-linear-gradient( #ffffff, #f0f0f0) !important;
 }
 .useagepanel .useage:active {
-	box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+	box-shadow: 0 1px 3px #B2B2B2 inset;
 }
 .useagepanel .useageshow {
 	position: absolute;
 	/*width: 100px;
 	height: 100%;*/
-	width: 580px;
+	width: 620px;
 	padding: 10px;
 	padding-bottom: 20px;
 	background-color: white;
@@ -435,7 +459,7 @@ a {
 	background-color: white;
 	border-radius: 5px;
 	border: 1px solid #B2B2B2;
-	z-index: 9;
+	z-index: 8;
 	display: none;
 	opacity: 0;
 }

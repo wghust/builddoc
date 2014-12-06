@@ -9,13 +9,19 @@ h3 {
 }
 .right_cats {
 	position: fixed;
-	margin-top: 40px;
+	/*margin-top: 40px;*/
 	background-color: white;
-	width: 150px;
+	width: 330px;
+	/*left: 10px;*/
+	left: 0;
+	top: 50px;
+	/*height: 100%;*/
 	padding: 5px 0;
-	border: 1px solid #B2B2B2;
-	border-radius: 5px;
+	/*border: 1px solid #B2B2B2;*/
+	/*border-radius: 5px;*/
 	overflow: auto;
+	word-wrap: break-word;
+	box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 .tocat {
 	display: block;

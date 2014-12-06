@@ -7,6 +7,12 @@ module.exports = function(mongoose, moment, marked, cheerio) {
         title: {
             type: String
         },
+        userid: {
+            type: Number
+        },
+        pageid: {
+            type: Number
+        },
         catid: {
             type: Number
         },
@@ -25,6 +31,8 @@ module.exports = function(mongoose, moment, marked, cheerio) {
     });
     var Block = mongoose.model('block', BlockSchema);
 
+
+    // 获取块uid
     getBlockNum = function(callback) {
         var nowuid = 1;
         Block.find().sort({
@@ -48,7 +56,8 @@ module.exports = function(mongoose, moment, marked, cheerio) {
                 catname: block.catname,
                 dec: block.dec,
                 content: block.content,
-                date: moment().format()
+                date: moment().format(),
+                pageid: block.pageid
             });
             newOneBlock.save(function(err) {
                 var state = 0;
@@ -57,7 +66,7 @@ module.exports = function(mongoose, moment, marked, cheerio) {
                 } else {
                     state = 1; // 表示成功
                 }
-                callback(nowuid, state);
+                callback(block.pageid, nowuid, state);
             });
         });
     };
@@ -77,9 +86,9 @@ module.exports = function(mongoose, moment, marked, cheerio) {
             }
         }, function(err) {
             if (err) {
-                callback(block.uid, 0);
+                callback(block.pageid, block.uid, 0);
             } else {
-                callback(block.uid, 1);
+                callback(block.pageid, block.uid, 1);
             }
         });
     };
@@ -178,8 +187,10 @@ module.exports = function(mongoose, moment, marked, cheerio) {
         });
     };
 
-    makeIndexBlock = function(callback) {
-        Block.find().sort({
+    makeIndexBlock = function(pageid, callback) {
+        Block.find({
+            'pageid': pageid
+        }).sort({
             'catid': 'asc',
             'uid': 'asc'
         }).exec(function(err, blocks) {

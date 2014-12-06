@@ -147,10 +147,12 @@ $(document).ready(function() {
                 } else {
                     var _addtitle = $(".add_cat_form_title").val();
                     var _adddec = $(".add_cat_form_dec").val();
+                    var _addpageid = parseInt($(".block").data('pageid'));
                     if (_addtitle == "") {
                         alert("栏目名为空!");
                     } else {
                         var data = {
+                            pageid: _addpageid,
                             catname: _addtitle,
                             catdec: _adddec
                         };
@@ -294,13 +296,15 @@ $(document).ready(function() {
                 var catid = parseInt($(".b_selected_cat span").data("value"));
                 var catname = $(".b_selected_cat span").text();
                 var dec = $(".b_description").val();
+                var pageid = parseInt($(".block").data('pageid'));
 
                 var block = {
                     content: content,
                     title: title,
                     catid: catid,
                     catname: catname,
-                    dec: dec
+                    dec: dec,
+                    pageid: pageid
                 };
 
                 var url = "/doc/savecon";
@@ -322,7 +326,7 @@ $(document).ready(function() {
                         // console.log(back);
                         if (back.state) {
                             alert(msg[0]);
-                            window.location.href = "/block/" + back.nowuid;
+                            window.location.href = "/block/" + back.nowpageid + "/" + back.nowuid;
                         } else {
                             alert(msg[1]);
                         }

@@ -1,5 +1,8 @@
 module.exports = function(mongoose, moment) {
     var CatSchema = new mongoose.Schema({
+        pageid: {
+            type: Number
+        },
         catid: {
             type: Number,
             default: 1
@@ -29,9 +32,10 @@ module.exports = function(mongoose, moment) {
     };
 
     // 获取新的id
-    getNewId = function(callback) {
+    getNewCatId = function(callback) {
+        console.log("right");
         Cat.find().sort({
-            catid: 'asc'
+            catid: 1
         }).exec(function(err, cats) {
             var newid = 1;
             if (cats.length != 0) {
@@ -47,8 +51,10 @@ module.exports = function(mongoose, moment) {
             if (!ishas) {
                 callback(null, false);
             } else {
-                getNewId(function(newid) {
+                getNewCatId(function(newid) {
+                    // console.log(newid);
                     var newCat = new Cat({
+                        pageid: cat.pageid,
                         catid: newid,
                         catname: cat.catname,
                         catdec: cat.catdec
@@ -84,8 +90,10 @@ module.exports = function(mongoose, moment) {
     };
 
     // 获取所有的栏目
-    getAllCat = function(callback) {
-        Cat.find().sort({
+    getAllCat = function(pageid, callback) {
+        Cat.find({
+            'pageid': pageid
+        }).sort({
             catid: "asc"
         }).exec(function(err, cats) {
             if (err) {
