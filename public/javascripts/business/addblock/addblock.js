@@ -237,6 +237,14 @@ $(document).ready(function() {
                     "Enter": "newlineAndIndentContinueMarkdownList"
                 }
             });
+            $(".previewpanel").css({
+                'width': $(".CodeMirror").width() + 'px'
+            });
+            $(window).resize(function() {
+                $(".previewpanel").css({
+                    'width': $(".CodeMirror").width() + 'px'
+                });
+            });
         },
         _handleTable: function() {
             var table = $(".previewpanel").children("table");
