@@ -19,9 +19,10 @@ module.exports = function(mongoose, moment) {
     var Cat = mongoose.model('cat', CatSchema);
 
     // 判断是否有这个栏目
-    isHasCat = function(catname, callback) {
+    isHasCat = function(pageid, catname, callback) {
         Cat.find({
-            'catname': catname
+            'catname': catname,
+            'pageid': pageid
         }, function(err, cats) {
             if (cats.length == 0) {
                 callback(true);
@@ -47,7 +48,7 @@ module.exports = function(mongoose, moment) {
 
     // 插入新的栏目
     insertCat = function(cat, callback) {
-        isHasCat(cat.catname, function(ishas) {
+        isHasCat(cat.pageid, cat.catname, function(ishas) {
             if (!ishas) {
                 callback(null, false);
             } else {

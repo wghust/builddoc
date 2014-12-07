@@ -68,6 +68,7 @@
 
 @media screen and (min-width:768px) {
 	.index_pagelist {
+		float: left;
 		width: 600px;
 		margin-left: 100px;
 	}
@@ -123,20 +124,27 @@
 }
 @media screen and (min-width:768px) {
 	.topview {
-		position: fixed;
-		left: 890px;
+		position: relative;
+		float: left;
+		/*position: fixed;
+		left: 890px;*/
+		margin-left: 20px;
 		width: 160px;
-		height: 200px;
+		min-height: 1000px;
+		/*height: 200px;*/
 	}
 }
 .topview .topview_block {
-	padding: 10px;
+	/*padding: 10px;*/
+	width: 160px;
 	background-color: white;
-	border: 1px solid #B2B2B2;
+	/*border: 1px solid #B2B2B2;*/
 	border-radius: 5px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 .topview_block .topview_block_top {
 	/*padding-top: 5px;*/
+	padding: 10px;
 	padding-bottom: 5px;
 	font-size: 16px;
 	color: #E03838;
@@ -144,6 +152,7 @@
 .topview_block .topview_block_con {
 	margin-top: 5px;
 	margin-bottom: 5px;
+	padding: 10px;
 }
 .topview_block .topview_block_con ul li a {
 	display: block;

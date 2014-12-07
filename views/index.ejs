@@ -1,5 +1,17 @@
 <% include header_2 %>
 	<link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
+	<script type="text/javascript" src="/javascripts/lib/jquery.pin.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$(".topview_block").pin({
+			containerSelector:".topview",
+			padding: {
+				top: 70
+			},
+			isresize:false
+		});
+	});
+	</script>
 	<div class="container">
 		<div class="index_con">
 			<div class="index_pagetag">
@@ -17,22 +29,6 @@
 						<a href="/show/3" data-tag="3">议论</a>
 					</li>
 				</ul>
-			</div>
-			<div class="topview">
-				<div class="topview_block">
-					<div class="topview_block_top">
-						<span>Hot</span>
-					</div>
-					<div class="topview_block_con">
-						<ul>
-							<% hotpage.forEach(function(one,index){ %>
-								<li>
-									<a href="/page/<%=one.uid%>/index"><%=one.pagename%></a>
-								</li>
-							<%	})%>
-						</ul>
-					</div>
-				</div>
 			</div>
 			<div class="index_pagelist">
 				<% pages.forEach(function(page,index){ %>
@@ -52,7 +48,23 @@
 					</div>
 				<%	}) %>
 			</div>
-			<!-- <div class="clear"></div> -->
+			<div class="topview">
+				<div class="topview_block">
+					<div class="topview_block_top">
+						<span>Hot</span>
+					</div>
+					<div class="topview_block_con">
+						<ul>
+							<% hotpage.forEach(function(one,index){ %>
+								<li>
+									<a href="/page/<%=one.uid%>/index"><%=one.pagename%></a>
+								</li>
+							<%	})%>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
 		</div>
 	</div>
 <% include footer %>
