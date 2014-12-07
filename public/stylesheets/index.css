@@ -70,6 +70,7 @@
 	.index_pagelist {
 		float: left;
 		width: 600px;
+		min-height: 100px;
 		margin-left: 100px;
 	}
 }
