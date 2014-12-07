@@ -4,6 +4,9 @@ module.exports = function(mongoose, moment, marked) {
             type: Number,
             default: 1
         },
+        author: {
+            type: String
+        },
         userid: {
             type: Number
         },
@@ -11,6 +14,19 @@ module.exports = function(mongoose, moment, marked) {
             type: String
         },
         pagedec: {
+            type: String
+        },
+        date: {
+            type: Date
+        },
+        view: {
+            type: Number,
+            default: 0
+        },
+        pagetag: {
+            type: Number
+        },
+        pagetagValue: {
             type: String
         }
     });
@@ -43,13 +59,17 @@ module.exports = function(mongoose, moment, marked) {
     };
 
     // 新建
-    addPage = function(userid, page, callback) {
+    addPage = function(user, page, callback) {
         getNewPageUid(function(uid) {
             var newPage = new Page({
                 uid: uid,
-                userid: userid,
+                author: user.username,
+                userid: user.uid,
                 pagename: page.pagename,
-                pagedec: page.pagedec
+                pagedec: page.pagedec,
+                pagetag: page.pagetag,
+                pagetagValue: page.pagetagValue,
+                date: moment().format()
             });
             newPage.save(function(err) {
                 if (err) {
@@ -91,7 +111,9 @@ module.exports = function(mongoose, moment, marked) {
         }, {
             $set: {
                 pagename: page.pagename,
-                pagedec: page.pagedec
+                pagedec: page.pagedec,
+                pagetag: page.pagetag,
+                pagetagValue: page.pagetagValue
             }
         }).exec(function(err) {
             callback(err);
@@ -107,12 +129,84 @@ module.exports = function(mongoose, moment, marked) {
         });
     };
 
+    addPageView = function(uid, callback) {
+        Page.update({
+            uid: uid
+        }, {
+            $inc: {
+                view: 1
+            }
+        }).exec(function(err) {
+            callback(err);
+        });
+    };
+
+    getIndexPage = function(tag, callback) {
+        if (tag == 0) {
+            Page.find().sort({
+                'uid': 'desc'
+            }).exec(function(err, pages) {
+                var back = [];
+                pages.forEach(function(page, index) {
+                    b = {
+                        uid: page.uid,
+                        author: page.author,
+                        userid: page.userid,
+                        pagename: page.pagename,
+                        pagedec: page.pagedec,
+                        pagetag: page.pagetag,
+                        pagetagValue: page.pagetagValue,
+                        view: page.view,
+                        date: moment(page.date).format('YYYY-MM-DD')
+                    };
+                    back.push(b);
+                });
+                callback(err, back);
+            });
+        } else {
+            Page.find({
+                'pagetag': tag
+            }).sort({
+                'uid': 'desc'
+            }).exec(function(err, pages) {
+                var back = [];
+                pages.forEach(function(page, index) {
+                    b = {
+                        uid: page.uid,
+                        author: page.author,
+                        userid: page.userid,
+                        pagename: page.pagename,
+                        pagedec: page.pagedec,
+                        pagetag: page.pagetag,
+                        pagetagValue: page.pagetagValue,
+                        view: page.view,
+                        date: moment(page.date).format('YYYY-MM-DD')
+                    };
+                    back.push(b);
+                });
+                callback(err, back);
+            });
+        }
+    };
+
+    getHotPage = function(callback) {
+        Page.find().sort({
+            'view': 'desc'
+        }).skip(0).limit(4).exec(function(err, hotpage) {
+            callback(hotpage);
+        });
+    };
+
+
     return {
         addPage: addPage,
         getAllPage: getAllPage,
         getPageUserId: getPageUserId,
         getOnePage: getOnePage,
         updatePage: updatePage,
-        deletePage: deletePage
+        deletePage: deletePage,
+        addPageView: addPageView,
+        getIndexPage: getIndexPage,
+        getHotPage: getHotPage
     };
 };

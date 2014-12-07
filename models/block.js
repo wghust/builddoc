@@ -215,12 +215,29 @@ module.exports = function(mongoose, moment, marked, cheerio) {
         });
     };
 
+    editBlockCat = function(newCat, callback) {
+        Block.update({
+            'catid': newCat.catid
+        }, {
+            $set: {
+                'catname': newCat.catname
+            }
+        }).exec(function(err) {
+            if (err) {
+                callback(1);
+            } else {
+                callback(0);
+            }
+        });
+    };
+
     return {
         saveOneBlock: saveOneBlock,
         getOneBlock: getOneBlock,
         getOneBlockMark: getOneBlockMark,
         updateOneBlock: updateOneBlock,
         deleteOneBlock: deleteOneBlock,
-        makeIndexBlock: makeIndexBlock
+        makeIndexBlock: makeIndexBlock,
+        editBlockCat: editBlockCat
     };
 };

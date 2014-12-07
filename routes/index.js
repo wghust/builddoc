@@ -25,9 +25,37 @@ var models = {
 
 
 router.get('/', function(req, res) {
-    res.redirect('/admin/index');
+    // res.render("index", {
+    //     title: 'index'
+    // });
+    res.redirect('/show');
 });
 
+router.get('/show', function(req, res) {
+    models.Page.getIndexPage(0, function(err, pages) {
+        models.Page.getHotPage(function(hotpage) {
+            res.render("index", {
+                title: 'index',
+                pages: pages,
+                tag: 0,
+                hotpage: hotpage
+            });
+        });
+    });
+});
+router.get('/show/:tag', function(req, res) {
+    var tag = req.param('tag');
+    models.Page.getIndexPage(tag, function(err, pages) {
+        models.Page.getHotPage(function(hotpage) {
+            res.render("index", {
+                title: 'index',
+                pages: pages,
+                tag: tag,
+                hotpage: hotpage
+            });
+        });
+    });
+});
 
 // 注册
 router.get('/admin/register', function(req, res) {
@@ -126,11 +154,13 @@ router.get('/page/:id/index', function(req, res) {
             if (userid == null) {
                 res.redirect('/admin/index');
             } else {
-                res.render('doc', {
-                    title: '文档',
-                    pageid: pageid,
-                    blocks: blocks,
-                    userid: userid
+                models.Page.addPageView(pageid, function(err) {
+                    res.render('doc', {
+                        title: '文档',
+                        pageid: pageid,
+                        blocks: blocks,
+                        userid: userid
+                    });
                 });
             }
         });
@@ -148,9 +178,11 @@ router.get('/page/add', function(req, res) {
 router.post('/page/add', function(req, res) {
     var page = {
         pagename: req.param('pagename'),
-        pagedec: req.param('pagedec')
+        pagedec: req.param('pagedec'),
+        pagetag: req.param('pagetag'),
+        pagetagValue: req.param('pagetagValue')
     };
-    models.Page.addPage(req.session.user.uid, page, function(state) {
+    models.Page.addPage(req.session.user, page, function(state) {
         var b = {
             state: 0
         };
@@ -253,11 +285,13 @@ router.post('/doc/editcat', function(req, res) {
         catdec: req.param('catdec')
     };
     models.Cat.editCat(newCat, function(state) {
-        var b = {
-            state: state,
-            cat: newCat
-        };
-        res.end(JSON.stringify(b));
+        models.Block.editBlockCat(newCat, function(state_2) {
+            var b = {
+                state: state_2,
+                cat: newCat
+            };
+            res.end(JSON.stringify(b));
+        });
     });
 });
 

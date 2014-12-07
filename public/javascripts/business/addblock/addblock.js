@@ -316,12 +316,13 @@ $(document).ready(function() {
                 };
 
                 var url = "/doc/savecon";
-                var msg = ["保存成功", "保存不成功"];
+                var msg = ["保存成功", "保存不成功", "保存中"];
                 if ($(this).data('op') == 'update') {
                     url = "/doc/updatecon";
                     block.uid = $(".b_uid").val();
-                    msg = ["更新成功", "更新不成功"];
+                    msg = ["更新成功", "更新不成功", "更新中"];
                 }
+                $(".saveall").val(msg[2]);
                 $.ajax({
                     type: 'POST',
                     data: {
@@ -333,6 +334,7 @@ $(document).ready(function() {
                         var back = callback;
                         // console.log(back);
                         if (back.state) {
+                            $(".saveall").val(msg[0]);
                             alert(msg[0]);
                             window.location.href = "/block/" + back.nowpageid + "/" + back.nowuid;
                         } else {

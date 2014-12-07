@@ -8,7 +8,20 @@
 				<span>添加page</span>
 			</div>
 			<div class="block_con">
-				<input type="text" placeholder="pagename" class="page_add_name" value="<%=page.pagename%>"><br>
+				<input type="text" placeholder="pagename" class="page_add_name" value="<%=page.pagename%>">
+				<div class="page_tag">
+					<% if(page.pagetag) {%>
+						<span data-tag="<%=page.pagetag%>" class="page_tag_span"><%=page.pagetagValue%></span>
+					<% } else {%>
+						<span data-tag="1" class="page_tag_span">技术</span>
+					<% } %>
+					<ul data-open="0">
+						<li data-tag="1">技术</li>
+						<li data-tag="2">生活</li>
+						<li data-tag="3">议论</li>
+					</ul>
+				</div><br>
+				<div class="clear"></div>
 				<textarea placeholder="Page Description" class="page_add_dec"><%=page.pagedec%></textarea><br>
 				<input type="button" value="Add" class="page_btn_add">	
 			</div>
