@@ -28,6 +28,9 @@ module.exports = function(mongoose, moment, marked) {
         },
         pagetagValue: {
             type: String
+        },
+        pageys: {
+            type: Number
         }
     });
 
@@ -51,9 +54,9 @@ module.exports = function(mongoose, moment, marked) {
             'uid': pageid
         }).exec(function(err, page) {
             if (page == null) {
-                callback(null);
+                callback(null, null);
             } else {
-                callback(page.userid);
+                callback(page.userid, page.pageys);
             }
         });
     };
@@ -69,7 +72,8 @@ module.exports = function(mongoose, moment, marked) {
                 pagedec: page.pagedec,
                 pagetag: page.pagetag,
                 pagetagValue: page.pagetagValue,
-                date: moment().format()
+                date: moment().format(),
+                pageys: page.pageys
             });
             newPage.save(function(err) {
                 if (err) {
@@ -113,7 +117,8 @@ module.exports = function(mongoose, moment, marked) {
                 pagename: page.pagename,
                 pagedec: page.pagedec,
                 pagetag: page.pagetag,
-                pagetagValue: page.pagetagValue
+                pagetagValue: page.pagetagValue,
+                pageys: page.pageys
             }
         }).exec(function(err) {
             callback(err);
@@ -143,7 +148,9 @@ module.exports = function(mongoose, moment, marked) {
 
     getIndexPage = function(tag, callback) {
         if (tag == 0) {
-            Page.find().sort({
+            Page.find({
+                'pageys': 0
+            }).sort({
                 'uid': 'desc'
             }).exec(function(err, pages) {
                 var back = [];
@@ -165,7 +172,8 @@ module.exports = function(mongoose, moment, marked) {
             });
         } else {
             Page.find({
-                'pagetag': tag
+                'pagetag': tag,
+                'pageys': 0
             }).sort({
                 'uid': 'desc'
             }).exec(function(err, pages) {
@@ -190,7 +198,9 @@ module.exports = function(mongoose, moment, marked) {
     };
 
     getHotPage = function(callback) {
-        Page.find().sort({
+        Page.find({
+            "pageys": 0
+        }).sort({
             'view': 'desc'
         }).skip(0).limit(4).exec(function(err, hotpage) {
             callback(hotpage);

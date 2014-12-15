@@ -116,12 +116,26 @@ module.exports = function(mongoose, moment) {
                 callback(0);
             }
         });
-    }
+    };
+
+    // 
+    deleteCatByPageId = function(pageid, callback) {
+        Cat.remove({
+            'pageid': pageid
+        }).exec(function(err) {
+            if (err) {
+                callback(0);
+            } else {
+                callback(1);
+            }
+        });
+    };
 
     return {
         insertCat: insertCat,
         getAllCat: getAllCat,
         deleteCat: deleteCat,
-        editCat: editCat
+        editCat: editCat,
+        deleteCatByPageId: deleteCatByPageId
     };
 };

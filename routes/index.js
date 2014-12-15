@@ -150,7 +150,16 @@ router.get('/admin/index', function(req, res) {
 router.get('/page/:id/index', function(req, res) {
     var pageid = req.param('id');
     models.Block.makeIndexBlock(pageid, function(err, blocks) {
-        models.Page.getPageUserId(pageid, function(userid) {
+        models.Page.getPageUserId(pageid, function(userid, pageys) {
+            if (pageys == 1) {
+                if (req.session.loggedIn) {
+                    if (req.session.user.uid != userid) {
+                        res.redirect('/show');
+                    }
+                } else {
+                    res.redirect('/show');
+                }
+            }
             if (userid == null) {
                 res.redirect('/admin/index');
             } else {
@@ -180,7 +189,8 @@ router.post('/page/add', function(req, res) {
         pagename: req.param('pagename'),
         pagedec: req.param('pagedec'),
         pagetag: req.param('pagetag'),
-        pagetagValue: req.param('pagetagValue')
+        pagetagValue: req.param('pagetagValue'),
+        pageys: req.param('pageys')
     };
     models.Page.addPage(req.session.user, page, function(state) {
         var b = {
@@ -198,7 +208,7 @@ router.post('/page/add', function(req, res) {
 router.get('/page/:id/edit', function(req, res) {
     var pageid = req.param('id');
     if (req.session.loggedIn) {
-        models.Page.getPageUserId(pageid, function(userid) {
+        models.Page.getPageUserId(pageid, function(userid, pageys) {
             if (req.session.user.uid == userid) {
                 models.Page.getOnePage(pageid, function(err, page) {
                     res.render('pageedit', {
@@ -236,15 +246,19 @@ router.post('/page/save', function(req, res) {
 router.get('/page/:uid/delete', function(req, res) {
     var pageid = req.param('uid');
     models.Page.deletePage(pageid, function(err) {
-        var msg = ""
-        if (err) {
-            msg = "删除失败";
-        } else {
-            msg = "删除成功";
-        }
-        res.render('deletepage', {
-            'title': '删除',
-            'msg': msg
+        models.Cat.deleteCatByPageId(pageid, function(state_1) {
+            models.Block.deleteBlockByPageId(pageid, function(state_2) {
+                var msg = ""
+                if (state_2 == 0) {
+                    msg = "删除失败";
+                } else {
+                    msg = "删除成功";
+                }
+                res.render('deletepage', {
+                    'title': '删除',
+                    'msg': msg
+                });
+            });
         });
     });
 });
@@ -326,7 +340,7 @@ router.post('/doc/updatecon', function(req, res) {
 router.get('/block/:id/add', function(req, res) {
     if (req.session.loggedIn) {
         var pageid = req.param('id');
-        getPageUserId(pageid, function(userid) {
+        getPageUserId(pageid, function(userid, pageys) {
             if (req.session.user.uid == userid) {
                 models.Cat.getAllCat(pageid, function(err, cats) {
                     res.render('addblock', {
@@ -349,7 +363,16 @@ router.get('/block/:id/add', function(req, res) {
 router.get('/block/:id/:uid', function(req, res) {
     var uid = req.param('uid');
     var pageid = req.param('id');
-    getPageUserId(pageid, function(userid) {
+    getPageUserId(pageid, function(userid, pageys) {
+        if (pageys == 1) {
+            if (req.session.loggedIn) {
+                if (req.session.user.uid != userid) {
+                    res.redirect('/show');
+                }
+            } else {
+                res.redirect('/show');
+            }
+        }
         models.Block.getOneBlock(uid, function(block, state) {
             res.render('block', {
                 title: 'Block',
@@ -368,7 +391,7 @@ router.get('/block/:id/:uid/edit', function(req, res) {
     var uid = req.param('uid');
     // console.log(uid);
     if (req.session.loggedIn) {
-        models.Page.getPageUserId(pageid, function(userid) {
+        models.Page.getPageUserId(pageid, function(userid, pageys) {
             if (req.session.user.uid == userid) {
                 models.Block.getOneBlockMark(uid, function(block, state) {
                     models.Cat.getAllCat(pageid, function(err, cats) {
@@ -395,7 +418,7 @@ router.get('/block/:id/:uid/delete', function(req, res) {
     var uid = req.param('uid');
     var pageid = req.param('id');
     if (req.session.loggedIn) {
-        models.Page.getPageUserId(pageid, function(userid) {
+        models.Page.getPageUserId(pageid, function(userid, pageys) {
             if (req.session.user.uid == userid) {
                 models.Block.deleteOneBlock(uid, function(state) {
                     var msg = "";

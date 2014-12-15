@@ -5,6 +5,7 @@ $(document).ready(function() {
         _pthis.pagedec = null;
         _pthis.pagetag = null;
         _pthis.pagetagValue = null;
+        _pthis.pageys = null;
     };
     addPage.prototype = {
         _init: function() {
@@ -23,6 +24,7 @@ $(document).ready(function() {
             _pthis.pagedec = $(".page_add_dec").val();
             _pthis.pagetag = $(".page_tag_span").data('tag');
             _pthis.pagetagValue = $(".page_tag_span").text();
+            _pthis.pageys = $(".page_ys_span").data('ys');
         },
         _addPage: function() {
             $(".page_tag_span").click(function() {
@@ -53,6 +55,35 @@ $(document).ready(function() {
                 }).slideUp(200);
             });
 
+            $(".page_ys_span").click(function() {
+                var k_ul = $(".page_ys ul");
+                if (k_ul.data("open") == 0) {
+                    k_ul.slideDown(200);
+                    k_ul.data({
+                        'open': 1
+                    });
+                } else {
+                    k_ul.slideUp(200);
+                    k_ul.data({
+                        'open': 0
+                    });
+                }
+            });
+
+            $(".page_ys ul li").click(function() {
+                var g_li = $(this);
+                g_li.parent('ul').data({
+                    'open': 0
+                });
+                g_li.parent('ul').siblings('.page_ys_span').data({
+                    'ys': g_li.data('ys')
+                });
+                g_li.parent('ul').siblings('.page_ys_span').text(g_li.text());
+                g_li.parent('ul').data({
+                    'open': 0
+                }).slideUp(200);
+            });
+
             $(".page_btn_add").click(function() {
                 if (_pthis._checkValue()) {
                     $.ajax({
@@ -61,7 +92,8 @@ $(document).ready(function() {
                             pagename: _pthis.pagename,
                             pagedec: _pthis.pagedec,
                             pagetag: _pthis.pagetag,
-                            pagetagValue: _pthis.pagetagValue
+                            pagetagValue: _pthis.pagetagValue,
+                            pageys: _pthis.pageys
                         },
                         dataType: 'json',
                         url: '/page/add',

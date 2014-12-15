@@ -5,6 +5,7 @@
 	<script type="text/javascript" src="/highlight/addon/edit/matchbrackets.js"></script>
 	<script type="text/javascript" src="/highlight/addon/mode/loadmode.js"></script>
 	<script type="text/javascript" src="/javascripts/lib/marked.js"></script>
+	<script type="text/javascript" src="/javascripts/lib/jquery.easing.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="/highlight/lib/codemirror.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/highlighttheme.min.css">
 	<script type="text/javascript" src="/javascripts/business/addblock/addblock.js"></script>
@@ -17,7 +18,12 @@
 		line-height: 20px;
 	}
 	</style>
-	<div class="container">
+	<div class="container opcontainer" data-op="add">
+		<div class="newmark" data-open="0">
+			<input type="button" class="closenewmark" value="关闭">
+			<span class="newmark_title">markdown名称</span><br>
+			<textarea class="newmark_textarea"></textarea>
+		</div>
 		<div class="left">
 			<div class="block" data-pageid="<%=pageid%>">
 				<div class="block_top">
@@ -63,6 +69,10 @@
 					<div class="clear"></div>
 					<textarea placeholder="添加描述" class="b_description"></textarea><br>
 					<input type="button" class="preview" data-open="0" value="预览">
+					<div class="add_mark_panel">
+						<input type="button" class="addmark" data-open="0" value="添加markdown">
+						<input type="file" class="addmarkfile">
+					</div>
 					<div class="useagepanel">
 						<input type="button" class="useage" data-open="0" value="语法介绍">
 						<div class="useageshow">
@@ -109,7 +119,7 @@ function test() {
 					</div>
 					<div class="clear"></div>
 					<div class="write_form">
-						<textarea class="newedit" id="write_text" placeholder="newedit"></textarea><br>
+						<textarea class="newedit" id="write_text" placeholder="新内容"></textarea><br>
 						<div class="previewpanel">
 							
 						</div>

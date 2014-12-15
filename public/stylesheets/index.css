@@ -85,7 +85,7 @@
 	padding: 10px;
 	background-color: white;
 	border-radius: 5px;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+	box-shadow: 0 1px 1px rgba(0,0,0,0.3);
 	margin-bottom: 20px;
 }
 .index_block_top {
@@ -127,12 +127,9 @@
 	.topview {
 		position: relative;
 		float: left;
-		/*position: fixed;
-		left: 890px;*/
 		margin-left: 20px;
 		width: 160px;
-		min-height: 1000px;
-		/*height: 200px;*/
+		min-height: 500px;
 	}
 }
 .topview .topview_block {
@@ -141,7 +138,9 @@
 	background-color: white;
 	/*border: 1px solid #B2B2B2;*/
 	border-radius: 5px;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+	box-shadow: 0 1px 1px rgba(0,0,0,0.3);
+	overflow: hidden;
+	margin-bottom: 20px;
 }
 .topview_block .topview_block_top {
 	/*padding-top: 5px;*/
@@ -149,24 +148,65 @@
 	padding-bottom: 5px;
 	font-size: 16px;
 	color: #E03838;
+	background-color: #f6f6f6;
 }
 .topview_block .topview_block_con {
 	margin-top: 5px;
 	margin-bottom: 5px;
-	padding: 10px;
 }
 .topview_block .topview_block_con ul li a {
 	display: block;
-	padding-top: 2px;
-	padding-bottom: 2px;
+	padding: 7px 10px;
 	color: #778087;
-	/*text-decoration: underline;*/
-	margin-bottom: 1px;
 	width:140px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	font-size: 14px;
+	border-bottom: 1px solid #F2F2F2;
 }
 .topview_block .topview_block_con ul li a:hover {
 	color: #E03838;
+	background-color: #F2F2F2;
+}
+
+
+
+.topview .quickenter_block {
+	/*padding: 10px;*/
+	width: 160px;
+	background-color: white;
+	/*border: 1px solid #B2B2B2;*/
+	border-radius: 5px;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.3);
+	overflow: hidden;
+	/*margin-bottom: 20px;*/
+	margin-top: 20px;
+}
+.quickenter_block .quickenter_block_top {
+	/*padding-top: 5px;*/
+	padding: 10px;
+	padding-bottom: 5px;
+	font-size: 16px;
+	color: #E03838;
+	background-color: #f6f6f6;
+}
+.quickenter_block .quickenter_block_con {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.quickenter_block .quickenter_block_con ul li a {
+	display: block;
+	padding: 7px 10px;
+	color: #778087;
+	width:140px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: 14px;
+	border-bottom: 1px solid #F2F2F2;
+}
+.quickenter_block .quickenter_block_con ul li a:hover {
+	color: #E03838;
+	background-color: #F2F2F2;
 }

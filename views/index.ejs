@@ -3,7 +3,7 @@
 	<script type="text/javascript" src="/javascripts/lib/jquery.pin.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		$(".topview_block").pin({
+		$(".top_position").pin({
 			containerSelector:".topview",
 			padding: {
 				top: 70
@@ -49,18 +49,30 @@
 				<%	}) %>
 			</div>
 			<div class="topview">
-				<div class="topview_block">
-					<div class="topview_block_top">
-						<span>Hot</span>
+				<div class="top_position">
+					<div class="topview_block">
+						<div class="topview_block_top">
+							<span>Hot</span>
+						</div>
+						<div class="topview_block_con">
+							<ul>
+								<% hotpage.forEach(function(one,index){ %>
+									<li>
+										<a href="/page/<%=one.uid%>/index"><%=one.pagename%></a>
+									</li>
+								<%	})%>
+							</ul>
+						</div>
 					</div>
-					<div class="topview_block_con">
-						<ul>
-							<% hotpage.forEach(function(one,index){ %>
-								<li>
-									<a href="/page/<%=one.uid%>/index"><%=one.pagename%></a>
-								</li>
-							<%	})%>
-						</ul>
+					<div class="quickenter_block">
+						<div class="quickenter_block_top">
+							<span>Entrance</span>
+						</div>
+						<div class="quickenter_block_con">
+							<ul>
+								<li><a href="/admin/index">用户中心</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>

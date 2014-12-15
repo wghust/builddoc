@@ -231,6 +231,18 @@ module.exports = function(mongoose, moment, marked, cheerio) {
         });
     };
 
+    deleteBlockByPageId = function(pageid, callback) {
+        Block.remove({
+            'pageid': pageid
+        }).exec(function(err) {
+            if (err) {
+                callback(0);
+            } else {
+                callback(1);
+            }
+        });
+    };
+
     return {
         saveOneBlock: saveOneBlock,
         getOneBlock: getOneBlock,
@@ -238,6 +250,7 @@ module.exports = function(mongoose, moment, marked, cheerio) {
         updateOneBlock: updateOneBlock,
         deleteOneBlock: deleteOneBlock,
         makeIndexBlock: makeIndexBlock,
-        editBlockCat: editBlockCat
+        editBlockCat: editBlockCat,
+        deleteBlockByPageId: deleteBlockByPageId
     };
 };

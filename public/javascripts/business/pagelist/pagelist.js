@@ -20,11 +20,21 @@ $(document).ready(function() {
             $(".onepage").hover(function() {
                 $(this).children('.page_edit').fadeIn();
                 $(this).children('.page_delete').fadeIn();
-},            function() {
+            }, function() {
                 $(this).children('.page_edit').fadeOut();
                 $(this).children('.page_delete').fadeOut();
             });
-},
+            $(".page_delete").click(function(e) {
+                _pthis._delete($(this));
+                return false;
+            });
+        },
+        _delete: function(ele) {
+            var url = ele.attr('href');
+            if (confirm("你确定要删除？")) {
+                window.location.href = url;
+            }
+        }
     };
     var p = new page();
     p._init();
