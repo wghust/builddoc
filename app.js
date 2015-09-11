@@ -9,6 +9,8 @@ var MongoStore = require('connect-mongo')(session);
 var settings = require('./settings');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var fs = require('fs');
+
 
 var app = express();
 
@@ -18,8 +20,13 @@ app.set('view engine', 'ejs');
 
 app.use(favicon());
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.json({
+    limit: '50mb'
+}));
+app.use(bodyParser.urlencoded({
+    limit: '50mb',
+    extended: true
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
@@ -35,6 +42,8 @@ app.use(session({
     auto_reconnect: true,
     saveUninitialized: true
 }));
+
+
 app.use(function(req, res, next) {
     res.locals.user = req.session.user;
     res.locals.loggedIn = req.session.loggedIn;

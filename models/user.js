@@ -1,4 +1,4 @@
-module.exports = function(mongoose, moment, crypto) {
+module.exports = function(mongoose, moment, crypto, mail, set) {
     var UserSchema = new mongoose.Schema({
         uid: {
             type: Number,
@@ -12,6 +12,10 @@ module.exports = function(mongoose, moment, crypto) {
         },
         username: {
             type: String
+        },
+        islegal: {
+            type: Number,
+            default: 0 //0 不合法，1 合法
         }
     });
     var User = mongoose.model('user', UserSchema);
@@ -21,10 +25,15 @@ module.exports = function(mongoose, moment, crypto) {
         User.findOne({
             email: email
         }, function(err, result) {
+            console.log(result);
             if (result == null) {
-                callback(true);
+                callback(true, 0);
             } else {
-                callback(false);
+                if (result.islegal == 1) {
+                    callback(false, 0);
+                } else {
+                    callback(true, 1);
+                }
             }
         });
     };
@@ -48,27 +57,62 @@ module.exports = function(mongoose, moment, crypto) {
      * 1 存入不成功 2 注册成功
      */
     register = function(user, callback) {
-        isHas(user.email, function(back) {
+        isHas(user.email, function(back, isHadSave) {
             if (back) {
                 getNewId(function(newuid) {
                     var shaSum = crypto.createHash('sha256');
                     shaSum.update(user.password);
+                    var nowSha = shaSum.digest('hex');
                     var newUser = new User({
                         uid: newuid,
                         email: user.email,
-                        password: shaSum.digest('hex'),
-                        username: user.username
+                        password: nowSha,
+                        username: user.username,
+                        islegal: 0
                     });
-                    newUser.save(function(err) {
-                        if (err) {
-                            callback(1, null);
+                    var newma = buildma(user.email, nowSha);
+                    var content = "<h3>你好，我是doc的作者，欢迎来到doc</h3><p>请访问<a href='http://doc.tecclass.cn/callback/" + newma + "'>http://doc.tecclass.cn/callback/" + newma + "</a>确认邮件</p>";
+                    var mailOptions = {
+                        from: set.auth.user,
+                        to: user.email,
+                        subject: "确认邮箱",
+                        text: content,
+                        html: content
+                    };
+
+                    var newContent = "<h3>新注册用户</h3><p>注册邮箱：" + user.email + ",注册时间：" + moment().format('MMMM Do YYYY, h:mm:ss a') + ",用户名：" + user.username + "</p>";
+                    var newMailOptions = {
+                        from: set.auth.user,
+                        to: "1225733380@qq.com",
+                        subject: "新注册",
+                        text: newContent,
+                        html: newContent
+                    };
+                    mail.sendMail(newMailOptions, function(error, response) {
+
+                    });
+                    mail.sendMail(mailOptions, function(error, response) {
+                        if (error) {
+                            console.log("send fail");
+                            callback(3, null);
                         } else {
+                            console.log("send success");
                             var b = {
                                 uid: newuid,
                                 email: user.email,
                                 username: user.username
                             };
-                            callback(2, b);
+                            if (isHadSave == 0) {
+                                newUser.save(function(err) {
+                                    if (err) {
+                                        callback(1, null);
+                                    } else {
+                                        callback(2, b);
+                                    }
+                                });
+                            } else {
+                                callback(2, b);
+                            }
                         }
                     });
                 });
@@ -78,11 +122,57 @@ module.exports = function(mongoose, moment, crypto) {
         });
     };
 
+    // 生成校验码
+    buildma = function(email, password) {
+        var shaSum = crypto.createHash('sha256');
+        var string = email + password + set.cookieSecret;
+        shaSum.update(string);
+        return shaSum.digest('hex');
+    };
+
+    // 确认校验码
+    checkMa = function(ma, callback) {
+        User.find(function(err, users) {
+            var isRight = 0;
+            var newemail;
+            for (var i = 0; i < users.length; i++) {
+                var user = users[i];
+                var newma = buildma(user.email, user.password);
+                if (newma == ma) {
+                    isRight = 1;
+                    newemail = user.email;
+                    console.log(newemail);
+                    updateMa(newemail);
+                    break;
+                }
+            }
+            callback(isRight);
+        });
+    };
+
+    updateMa = function(email) {
+        User.update({
+            email: email
+        }, {
+            $set: {
+                islegal: 1
+            }
+        }).exec(function(err) {
+            console.log(err);
+            if (err) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+    };
+
     // 登陆判断
     isLoginHas = function(email, password, callback) {
         User.findOne({
             email: email,
-            password: password
+            password: password,
+            islegal: 1
         }, function(err, result) {
             if (result == null) {
                 callback(false, result);
@@ -110,6 +200,7 @@ module.exports = function(mongoose, moment, crypto) {
     };
     return {
         register: register,
-        login: login
+        login: login,
+        checkMa: checkMa
     };
 };

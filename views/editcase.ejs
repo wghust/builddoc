@@ -1,0 +1,55 @@
+<% include header_2 %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/case.css">
+<div class="container editcase" data-caseid="<%=onecase._id%>">
+	<div class="left">
+		<div class="block">
+			<div class="block_top">
+				<span class="icon-file-text">&nbsp;添加案例</span>
+			</div>
+			<div class="block_con">
+				<label>案例:&nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" placeholder="案例名称" class="ctext case_name" value="<%=onecase.casename%>"><br><br>
+				<label>案例等级:&nbsp;&nbsp;</label> 
+					<input type="radio" name="grade" class="cradio" checked value="3"><span>A 级</span>
+					<input type="radio" name="grade" class="cradio" value="2"><span>B 级</span>
+					<input type="radio" name="grade" class="cradio" value="1"><span>C 级</span>
+					<input type="radio" name="grade" class="cradio" value="0"><span>D 级</span>
+					<span class="icon-question queshow"><div class="showmsg">等级说明：<br><br>不同等级表示优先级不同。</div></span>
+				<br><br>
+				<label>案例平台:&nbsp;&nbsp;</label>
+				<a href="javascript:void(0)" class="cpanel cpanel_1">
+					<span class="cpanel_s cpanel_panel"><%=onecase.panel%></span>
+				<ul>
+					<li>windows</li>
+					<li>mac</li>
+					<li>linux</li>
+					<li>Native</li>
+					<li>Webapp</li>
+				</ul></a>
+
+				<br>
+				<br>
+				<label>测试机型:&nbsp;&nbsp;</label><input type="text" placeholder="测试机型" class="ctext case_model" value="<%=onecase.modal%>">&nbsp;&nbsp;
+				<label>版本号:&nbsp;&nbsp;</label><input type="text" placeholder="版本号" class="ctext case_version" value="<%=onecase.version%>">
+				<br><br>
+				<label id="labelleft">对应文档地址:&nbsp;&nbsp;</label>
+				<a href="javascript:void(0)" class="cpanel cpanel_2">
+					<span class="cpanel_s cpanel_pageid" data-id="<%=onecase.page.id%>"><%=onecase.page.name%></span>
+					<% if(pages != null) {%>
+					<ul>
+						<% pages.forEach(function(one,index){ %>
+							<li data-id="<%= one.uid%>"><%=one.pagename%></li>
+						<%	}) %>
+					</ul>
+					<% } %>
+				</a>
+				<div class="clear"></div><br>
+				
+				<a class="cbtn cupdate" href="javascript:void(0)">更新</a> <span class="icon-spinner9 spin"></span>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="/javascripts/business/case/updatecase.js"></script>
+<% include footer %>

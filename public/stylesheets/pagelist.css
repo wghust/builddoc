@@ -70,6 +70,47 @@
 	.onepage .page_delete:active {
 		box-shadow: 0 1px 2px #B2B2B2 inset;
 	}
+
+	.onepage .case_edit {
+		position: absolute;
+		right: 10px;
+		top: 5px;
+		z-index: 2;
+		color: black;
+		background-color: white;
+		padding: 2px 5px;
+		border-radius: 5px;
+		background-image: linear-gradient( #ffffff, #f0f0f0) !important;
+		background-image: -webkit-linear-gradient( #ffffff, #f0f0f0) !important;
+		background-image: -moz-linear-gradient( #ffffff, #f0f0f0) !important;
+		border: 1px solid #B2B2B2;
+		cursor: pointer;
+		display: none;
+		font-size: 12px;
+	}
+	.onepage .case_edit:active {
+		box-shadow: 0 1px 2px #B2B2B2 inset;
+	}
+	.onepage .case_delete {
+		position: absolute;
+		right: 50px;
+		top: 5px;
+		z-index: 2;
+		color: black;
+		background-color: white;
+		padding: 2px 5px;
+		border-radius: 5px;
+		background-image: linear-gradient( #ffffff, #f0f0f0) !important;
+		background-image: -webkit-linear-gradient( #ffffff, #f0f0f0) !important;
+		background-image: -moz-linear-gradient( #ffffff, #f0f0f0) !important;
+		border: 1px solid #B2B2B2;
+		cursor: pointer;
+		display: none;
+		font-size: 12px;
+	}
+	.onepage .case_delete:active {
+		box-shadow: 0 1px 2px #B2B2B2 inset;
+	}
 	/*add page*/
 	.page_add_name {
 		padding: 5px 10px;

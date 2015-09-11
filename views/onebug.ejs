@@ -1,0 +1,88 @@
+<% include header_2 %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/case.css">
+<div class="container editbug" data-bugid="<%=onebug._id%>">
+	<div class="left bug_left">
+		<div class="block">
+			<div class="block_top">
+				<span class="icon-file-text">&nbsp;添加BUG</span>
+			</div>
+			<div class="block_con">
+				<label id="labelleft">BUG内容:&nbsp;&nbsp;</label><textarea placeholder="BUG" class="ctext bug_con"><%=onebug.content%></textarea><br><br>
+				<label>BUG等级:&nbsp;&nbsp;</label>
+					<% if(onebug.grade == 3) {%>
+						<input type="radio" name="grade" checked class="cradio" value="3"><span class style="color:#e95354">红色</span>
+					<% } else {%>
+						<input type="radio" name="grade" class="cradio" value="3"><span class style="color:#e95354">红色</span>
+					<% } %>
+
+					<% if(onebug.grade == 2) {%>
+						<input type="radio" name="grade" checked class="cradio" value="2"><span style="color:#e59744">橙色</span>
+					<% } else {%>
+						<input type="radio" name="grade" class="cradio" value="2"><span style="color:#e59744">橙色</span>
+					<% } %>
+					
+					<% if(onebug.grade == 1) {%>
+						<input type="radio" name="grade" checked class="cradio" value="1"><span style="color:#60bc4d">绿色</span>
+					<% } else { %>
+						<input type="radio" name="grade" class="cradio" value="1"><span style="color:#60bc4d">绿色</span>
+					<% } %>
+					
+					<% if(onebug.grade == 0) {%>
+						<input type="radio" name="grade" checked class="cradio" value="0"><span style="color:#bf7ed5">紫色</span>
+					<% } else { %>
+						<input type="radio" name="grade" class="cradio" value="0"><span style="color:#bf7ed5">紫色</span>
+					<% } %>
+					<span class="icon-question queshow"><div class="showmsg">等级说明：<br><br>不同等级表示优先级不同。</div></span>
+				<br><br>
+				<label>前提条件:&nbsp;&nbsp;</label><input type="text" placeholder="前提条件" class="ctext case_term" value="<%=onebug.term%>">
+				<br><br>
+				<label id="labelleft">测试步骤:&nbsp;&nbsp;</label><textarea placeholder="测试步骤" class="ctext case_step"><%=onebug.step%></textarea>
+				<div class="clear"></div>
+				<label id="labelleft">期望结果:&nbsp;&nbsp;</label><textarea placeholder="期望结果" class="ctext case_result"><%=onebug.result%></textarea>
+				<div class="clear"></div>
+				<label id="labelleft">实际结果:&nbsp;&nbsp;</label><textarea placeholder="实际结果" class="ctext case_trueresult"><%=onebug.trueresult%></textarea>
+				<div class="clear"></div>
+				<label id="labelleft">出现率:&nbsp;&nbsp;</label> 
+				<% if(onebug.rate == 2) {%>
+					<input type="radio" name="rate" class="crate" checked value="2"><span>频繁出现</span>
+				<% } else { %>
+					<input type="radio" name="rate" class="crate" value="2"><span>频繁出现</span>
+				<% } %>
+				<% if(onebug.rate == 1) {%>
+					<input type="radio" name="rate" class="crate" checked value="1"><span>间隔出现</span>
+				<% } else { %>
+					<input type="radio" name="rate" class="crate" value="1"><span>间隔出现</span>
+				<% } %>
+				
+				<% if(onebug.rate == 0) {%>
+					<input type="radio" name="rate" class="crate" checked value="0"><span>不出现</span>
+				<% } else { %>
+					<input type="radio" name="rate" class="crate" value="0"><span>不出现</span>
+				<% } %>
+				
+				<div class="clear"></div><br>
+				<a href="javascript:void(0)" class="cbtn addbug">提交</a>
+			</div>
+		</div>
+	</div>
+	<div class="right bug_right">
+		<div class="block">
+			<div class="block_top">
+				<span class="icon-image">&nbsp;BUG图片</span>
+				<a href="javascript:void(0)" class="cbtn addimage">添加图片</a>
+				<input type="file" class="bugimage">
+				<input type="hidden" class="caseid" value="<%=onecase._id%>">
+			</div>
+			<div class="block_con">
+				<% if(onebug.images!= null) {%>
+					<% onebug.images.forEach(function(oneimage,index){ %>
+						<img src='<%=oneimage.url%>' class='bugimageshow' data-hash='<%=oneimage.hash%>' data-name='<%=oneimage.name%>'>
+					<%	}); %>
+				<% } %>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="/javascripts/business/case/updatebug.js"></script>
+<% include footer %>

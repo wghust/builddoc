@@ -1,0 +1,39 @@
+<% include header_3 %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/freename.css">
+<script type="text/javascript" src="/javascripts/lib/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/javascripts/business/addproject/luck.js"></script>
+<div class="container">
+	<div class="block">
+		<div class="block_top ob_b_top">
+			<span>对象选择器</span>
+		</div>
+		<div class="block_con">
+			<div class="oneob_div">
+				<span>对象名</span>
+			</div>
+			<div class="oneob_btn">
+				<div class="oneob_list">
+					<a href="javascript:void" data-freeuid="-1">选择栏目</a>
+				</div>
+				<div class="oneob_cli">
+					<a href="javascript:void(0)">开始</a>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="oneob_ex">
+				&nbsp;&nbsp;&nbsp;&nbsp;这是一个很无聊的东西，每次都用很长时间考虑对象名称。现在我的想法就是，项目取一个有趣的东西，里面对象就是这个东西里的产物。哈哈哈哈～～～～<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;想自己添加么？请点击<a href="/project/addprojectname">新二次元对象</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="obs_div">
+	<h4>项目表</h4>
+	<% if(obs.length!=0) {%>
+	<% obs.forEach(function(one,index){ %>
+		<span data-freeuid="<%=one.uid%>" class="onepro"><%=one.projectname%></span>
+	<%	}); %>
+	<% } %>
+	<div class="clear"></div>
+</div>
+<% include footer %>

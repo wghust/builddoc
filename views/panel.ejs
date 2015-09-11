@@ -18,5 +18,21 @@
 			<% } %>
 			<div class="clear"></div>
 		</div>
+		<div class="pagelist">
+			<h1>Case List</h1>
+			<% if(cases!=null) {%>
+				<% cases.forEach(function(onecase,index){ %>
+					<div class="onepage">
+						<a href="/case/<%=onecase._id%>/list" class="page_a">
+							<img src="" class="bg_img">
+						</a>
+						<span class="page_name"><%=onecase.casename%></span>
+						<a class="case_edit" href="/case/<%=onecase._id%>/one" data-uid="">Edit</a>
+						<a class="case_delete" href="" data-uid="">Delete</a>
+					</div>
+				<% }) %>
+			<% } %>
+			<div class="clear"></div>
+		</div>
 	</div>
 <% include footer %>

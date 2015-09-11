@@ -1,0 +1,45 @@
+<% include header_3 %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/freename.css">
+<script type="text/javascript" src="/javascripts/lib/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/javascripts/business/addproject/addproject.js"></script>
+<div class="container">
+	<div class="left">
+		<div class="block">
+			<div class="block_top">
+				<span>添加对象名</span>
+			</div>
+			<div class="block_con">
+				<div class="projectname">
+					<div class="pf_list">
+						<span data-freeuid="-1" class="pf_span">选择项目</span>
+						<ul class="pf_ul">
+							<% projectname.forEach(function(pname,index){ %>
+								<li data-freeuid="<%=pname.uid%>"><%=pname.projectname%></li>
+							<%	}); %>
+						</ul>
+					</div>
+					<div class="pf_add_project">
+						<span class="pf_add" data-op="hide">添加项目</span>
+						<input type="text" class="pf_addin" placeholder="添加项目名">
+						<div class="clear"></div>
+					</div>
+					<div class="pf_save_div">
+						<span class="pf_save">保存</span>						
+					</div>
+					<div class="clear"></div>
+					<!-- <input type="button" value="添加项目" class="addprojectname"> -->
+				</div>
+				<div class="objectcon">
+					<input type="text" class="pf_in" placeholder="添加对象">
+					<a href="javascript:void(0)" class="pf_msg">回车添加</a>
+					<div class="pf_con">
+						<ul>
+						</ul>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>		
+</div>
+<% include footer %>

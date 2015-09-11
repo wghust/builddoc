@@ -28,6 +28,18 @@ $(document).ready(function() {
                 _pthis._delete($(this));
                 return false;
             });
+            $(".onepage").hover(function() {
+                $(this).children('.case_edit').fadeIn();
+                $(this).children('.case_delete').fadeIn();
+            }, function() {
+                $(this).children('.case_edit').fadeOut();
+                $(this).children('.case_delete').fadeOut();
+            });
+            $(".case_delete").click(function(e) {
+                _pthis._delete($(this));
+                return false;
+            });
+
         },
         _delete: function(ele) {
             var url = ele.attr('href');

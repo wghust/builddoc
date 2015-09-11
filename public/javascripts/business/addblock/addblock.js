@@ -229,8 +229,8 @@ $(document).ready(function() {
                 var _panel = $(".newmark");
                 var file = $(".addmarkfile")[0].files[0];
                 var fileName = file.name.substring(0, file.name.lastIndexOf("."));
-                var fileType = file.type;
-                if (fileType != "text/markdown") {
+                var fileType = file.name.substring(file.name.lastIndexOf("."), file.name.length);
+                if (fileType != ".md") {
                     alert("文件类型错误");
                 } else {
                     _panel.children('.newmark_title').text(fileName);
@@ -277,7 +277,6 @@ $(document).ready(function() {
             _nthis._buildnewText();
             _nthis._preview();
             _nthis._save();
-            _nthis._addEditNewMarkdown();
         },
         _buildnewText: function() {
             _nthis._neditor = CodeMirror.fromTextArea(document.getElementById("write_text"), {
@@ -314,12 +313,49 @@ $(document).ready(function() {
                 }
             }
         },
+        _handleFlow: function() {
+            var flow = $(".previewpanel").find('.lang-flow');
+            for (var i = 0; i < flow.length; i++) {
+                $("<div id='flow_" + i + "' class='flowshow'></div>").insertAfter(flow.eq(i).parent('pre'));
+                var flowhtml = flow.eq(i).text();
+                flow.eq(i).parent('pre').remove();
+                diagram = flowchart.parse(flowhtml);
+                diagram.drawSVG('flow_' + i, {
+                    'line-width': 1,
+                    'line-length': 50,
+                    'text-margin': 10,
+                    'font-size': 14,
+                    'font-color': 'black',
+                    'line-color': 'black',
+                    'element-color': 'black',
+                    'fill': 'white',
+                    'yes-text': 'yes',
+                    'no-text': 'no',
+                    'arrow-end': 'block'
+                });
+            }
+        },
+        _handleSeq: function() {
+            var seq = $(".previewpanel").find('.lang-seq');
+            for (var i = 0; i < seq.length; i++) {
+                $("<div id='seq_" + i + "' class='seqshow'></div>").insertAfter(seq.eq(i).parent('pre'));
+                var seqhtml = seq.eq(i).text();
+                seq.eq(i).parent('pre').remove();
+                diagram = Diagram.parse(seqhtml);
+                diagram.drawSVG('seq_' + i, {
+                    'theme': 'simple',
+                    'line-width': 1
+                });
+            }
+        },
         _preview: function() {
             $(".preview").click(function() {
                 var _this = $(this);
                 if (_this.data('open') == 0) {
                     $(".previewpanel").html(marked(_nthis._neditor.getValue()));
                     _nthis._handleTable();
+                    _nthis._handleFlow();
+                    _nthis._handleSeq();
                     $(".previewpanel").css({
                         'display': 'block'
                     });
@@ -358,105 +394,77 @@ $(document).ready(function() {
                 var dec = $(".b_description").val();
                 var pageid = parseInt($(".block").data('pageid'));
 
-                var block = {
-                    content: content,
-                    title: title,
-                    catid: catid,
-                    catname: catname,
-                    dec: dec,
-                    pageid: pageid
-                };
+                if (_nthis._check(content, title, catid)) {
+                    var block = {
+                        content: content,
+                        title: title,
+                        catid: catid,
+                        catname: catname,
+                        dec: dec,
+                        pageid: pageid
+                    };
 
-                var url = "/doc/savecon";
-                var msg = ["保存成功", "保存不成功", "保存中"];
-                if ($(this).data('op') == 'update') {
-                    url = "/doc/updatecon";
-                    block.uid = $(".b_uid").val();
-                    msg = ["更新成功", "更新不成功", "更新中"];
-                }
-                $(".saveall").val(msg[2]);
-                $.ajax({
-                    type: 'POST',
-                    data: {
-                        block: block
-                    },
-                    dataType: 'json',
-                    url: url,
-                    success: function(callback) {
-                        var back = callback;
-                        // console.log(back);
-                        if (back.state) {
-                            $(".saveall").val(msg[0]);
-                            alert(msg[0]);
-                            window.location.href = "/block/" + back.nowpageid + "/" + back.nowuid;
-                        } else {
-                            alert(msg[1]);
-                        }
+                    var url = "/doc/savecon";
+                    var msg = ["保存成功", "保存不成功", "保存中"];
+                    if ($(this).data('op') == 'update') {
+                        url = "/doc/updatecon";
+                        block.uid = $(".b_uid").val();
+                        msg = ["更新成功", "更新不成功", "更新中"];
                     }
-                });
+                    $(".saveall").val(msg[2]);
+                    $.ajax({
+                        type: 'POST',
+                        data: {
+                            block: block
+                        },
+                        dataType: 'json',
+                        url: url,
+                        success: function(callback) {
+                            var back = callback;
+                            // console.log(back);
+                            if (back.state) {
+                                $(".saveall").val(msg[0]);
+                                alert(msg[0]);
+                                window.location.href = "/block/" + back.nowpageid + "/" + back.nowuid;
+                            } else {
+                                alert(msg[1]);
+                            }
+                        }
+                    });
+                }
             });
         },
-
-        // 添加额外markdown
-        _addEditNewMarkdown: function() {
-            $(".newmark").css({
-                'height': $(window).height() - 50 + 'px'
-            });
-            $(window).resize(function() {
-                $(".newmark").css({
-                    'height': $(window).height() - 50 + 'px'
-                });
-            });
-            $(".addmark").click(function() {
-                $(".addmarkfile").click();
-            });
-            $(".addmarkfile").change(function() {
-                var _panel = $(".newmark");
-                var file = $(".addmarkfile")[0].files[0];
-                var fileName = file.name.substring(0, file.name.lastIndexOf("."));
-                var fileType = file.type;
-                if (fileType != "text/markdown") {
-                    alert("文件类型错误");
+        _check: function(content, title, catid) {
+            if (title == "") {
+                alert("标题为空");
+                return false;
+            } else {
+                if (content == "") {
+                    alert("内容为空");
+                    return false;
                 } else {
-                    _panel.children('.newmark_title').text(fileName);
-                    var fileReader = new FileReader();
-                    fileReader.readAsText(file);
-                    fileReader.onload = function(e) {
-                        $(".newmark_textarea").val(e.target.result);
-                        if (_panel.data('open') == 0) {
-                            _panel.animate({
-                                'right': 0
-                            }, 1000, "easeOutElastic", function() {
-                                _panel.data({
-                                    'open': 1
-                                });
-                            });
-                        }
-                    };
+                    if (catid == 0) {
+                        alert("栏目为空");
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
-            });
-            $(".closenewmark").click(function() {
-                var _panel = $(".newmark");
-                _panel.animate({
-                    'right': '-450px'
-                }, 1000, "easeInCirc", function() {
-                    _panel.data({
-                        'open': 0
-                    });
-                    _panel.children('.newmark_title').text("");
-                    _panel.children(".newmark_textarea").val("");
-                    $(".addmarkfile").val("");
-                });
-            });
+            }
         }
     };
 
-    var nowcon = $(".opcontainer");
-    if (nowcon.data("op") == "add") {
-        var block = new addblock();
-        block.init();
-    } else {
-        var thisnew = new newedit();
-        thisnew.init();
-    }
+    var block = new addblock();
+    block.init();
+    var thisnew = new newedit();
+    thisnew.init();
+
+    // var nowcon = $(".opcontainer");
+    // if (nowcon.data("op") == "add") {
+    //     var block = new addblock();
+    //     block.init();
+    // } else {
+    //     var thisnew = new newedit();
+    //     thisnew.init();
+    // }
 });

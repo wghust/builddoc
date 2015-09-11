@@ -1,0 +1,23 @@
+<% include header_2 %>
+	<style type="text/css">
+	.replydiv {
+		position: relative;
+		margin: 0 auto;
+		width: 400px;
+		height: 100px;
+		background-color: white;
+		padding: 15px;
+		border-radius: 5px;
+		border: 1px solid #B2B2B2;
+	}
+	</style>
+	<div class="container">
+		<div class="replydiv">
+			<% if(isOk == 1) {%>
+				<p>你的邮件已经确认，请点击<a href='/admin/login'>登录</a>，继续登录</p>
+			<% }  else {%>
+				<p>对不起，你的邮件无效，请点击<a href='/admin/register'>注册</a>，重新注册</p>
+			<% } %>
+		</div>
+	</div>
+<% include footer %>

@@ -1,8 +1,55 @@
 /*common*/
+@font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot?-awt1r5');
+	src:url('../fonts/icomoon.eot?#iefix-awt1r5') format('embedded-opentype'),
+		url('../fonts/icomoon.woff?-awt1r5') format('woff'),
+		url('../fonts/icomoon.ttf?-awt1r5') format('truetype'),
+		url('../fonts/icomoon.svg?-awt1r5#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.icon-file-text:before {
+	content: "\e922";
+}
+.icon-spinner9:before {
+	content: "\e982";
+}
+.icon-question:before {
+	content: "\ea09";
+}
+.icon-bin:before {
+	content: "\e9ac";
+}
+.icon-user:before {
+	content: "\e971";
+}
+.icon-image:before {
+	content: "\e90d";
+}
+
+
 * {
 	/*font-family: "微软雅黑";*/
 	/*font-family: "宋体";*/
-	/*font-family: 'Open Sans','Helvetica Neue','Arial','Verdana','Lantinghei TC','Hiragino Kaku Gothic ProN','Heiti TC','Microsoft Yahei',sans-serif;*/
+	font-family: 'Open Sans','Helvetica Neue','Arial','Verdana','Lantinghei TC','Hiragino Kaku Gothic ProN','Heiti TC','Microsoft Yahei',sans-serif;
+	font-family: "FreightTextProBook-Regular", Georgia, Cambria, "Times New Roman", Times, serif;
+	-moz-osx-font-smoothing: grayscale; 
+	-webkit-font-smoothing: antialiased;
 }
 body {
 	padding: 0;
@@ -102,7 +149,18 @@ a {
 	background-color: #3592DD;
 	color: white;
 }
-
+@media screen and (max-width: 768px) {
+	.nav ul li {
+		display: none;
+	}
+	.nav ul li:nth-child(1) {
+		display: inline-block;
+	}
+	.nav ul li a{
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
 .userifm {
 	float: right;
 }
@@ -167,7 +225,8 @@ a {
 	}
 	.block .block_top {
 		width: 880px;
-		padding: 5px 10px;
+		/*padding: 5px 10px;*/
+		padding: 5px 10px 5px 0;
 	}
 	.block .block_top span {
 		font-size: 20px;
@@ -289,6 +348,7 @@ a {
 	position: relative;
 	float: left;
 	margin-left: 50px;
+	font-size: 12px;
 }
 .b_cat .b_selected_cat {
 	border: 1px solid #B2B2B2;
@@ -661,6 +721,18 @@ a {
 		display: none;
 		opacity: 0;
 	}
+	.previewpanel img {
+		max-height: 200px;
+		max-width: 100%;
+	}
+	.previewpanel blockquote {
+		text-align: center;
+		padding: 5px;
+		margin: 0;
+		border-radius: 5px;
+		border: 1px solid #B2B2B2;
+		background-color: #F2F2F2;
+	}
 }
 @media screen and (max-width:768px) {
 	.write_form {
@@ -692,8 +764,29 @@ a {
 		display: none;
 		opacity: 0;
 	}
+	.previewpanel img {
+		max-height: 200px;
+		max-width: 100%;
+	}
+	.previewpanel blockquote {
+		text-align: center;
+		padding: 5px;
+		margin: 0;
+		border-radius: 5px;
+		border: 1px solid #B2B2B2;
+		background-color: #F2F2F2;
+	}
 }
-
+.imagebg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.5);
+	z-index: 20;
+	display: none;
+}
 /*markdown*/
 table {
 	border: 1px solid #B2B2B2;
@@ -722,6 +815,24 @@ pre code {
 	padding: 0;
 	word-wrap: break-word;
 }
+.baidutongji {
+	display: none;
+}
+.flowshow {
+	position: relative;
+	padding: 15px 30px;
+	overflow: auto;
+	/*text-align: center;*/
+}
+.seqshow {
+	position: relative;
+	padding: 15px 30px;
+	overflow: auto;
+}
+.tableblock {
+	overflow: auto;
+}
+
 
 
 

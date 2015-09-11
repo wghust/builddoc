@@ -7,6 +7,7 @@ $(document).ready(function() {
             email: null,
             password: null
         };
+        _rthis.isAv = true;
     };
     register.prototype = {
         init: function() {
@@ -14,34 +15,47 @@ $(document).ready(function() {
         },
         _goReg: function() {
             _rthis.ele.click(function() {
-                _rthis._getValue();
-                var allcheck = _rthis._check();
-                if (allcheck.checkResult == 0) {
-                    var user_msg = $(".user_msg");
-                    for (i = 0; i < user_msg.length; i++) {
-                        user_msg.eq(i).text(allcheck.msg[i].msgValue);
-                    }
-                } else {
-                    // ajax
-                    $.ajax({
-                        type: 'POST',
-                        data: _rthis.user,
-                        url: '/admin/regcheck',
-                        dataType: 'JSON',
-                        success: function(b) {
-                            // alert(typeof state);
-                            if (b.state == 0) {
-                                alert("用户已经存在");
-                            } else {
-                                if (b.state == 1) {
-                                    alert("注册不成功");
-                                } else {
-                                    alert("注册成功");
-                                    window.location.href = "/admin/index";
-                                }
-                            }
+                if (_rthis.isAv == true) {
+                    _rthis._getValue();
+                    var allcheck = _rthis._check();
+                    if (allcheck.checkResult == 0) {
+                        var user_msg = $(".user_msg");
+                        for (i = 0; i < user_msg.length; i++) {
+                            user_msg.eq(i).text(allcheck.msg[i].msgValue);
                         }
-                    });
+                    } else {
+                        _rthis.isAv = false;
+                        _rthis.ele.text("提交中");
+                        // ajax
+                        $.ajax({
+                            type: 'POST',
+                            data: _rthis.user,
+                            url: '/admin/regcheck',
+                            dataType: 'JSON',
+                            success: function(b) {
+                                // alert(typeof state);
+                                if (b.state == 0) {
+                                    alert("用户已经存在");
+                                    _rthis.ele.text("注册");
+                                } else {
+                                    if (b.state == 1) {
+                                        alert("注册不成功");
+                                        _rthis.ele.text("注册");
+                                    } else {
+                                        if (b.state == 3) {
+                                            alert("邮件发送不成功");
+                                            _rthis.ele.text("注册");
+                                        } else {
+                                            alert("已提交注册");
+                                            _rthis.ele.text("注册成功");
+                                            window.location.href = "/callback/show";
+                                        }
+                                    }
+                                }
+                                _rthis.isAv = true;
+                            }
+                        });
+                    }
                 }
             });
         },
@@ -104,6 +118,7 @@ $(document).ready(function() {
             email: null,
             password: null
         };
+        _gthis.isAv = true;
     };
     login.prototype = {
         init: function() {
@@ -111,34 +126,42 @@ $(document).ready(function() {
         },
         _goLogin: function() {
             _gthis.ele.click(function() {
-                _gthis._getValue();
-                var allcheck = _gthis._check();
-                if (allcheck.checkResult == 0) {
-                    var user_msg = $(".user_msg");
-                    for (i = 0; i < user_msg.length; i++) {
-                        user_msg.eq(i).text(allcheck.msg[i].msgValue);
-                    }
-                } else {
-                    // ajax
-                    $.ajax({
-                        type: 'POST',
-                        data: _gthis.user,
-                        url: '/admin/logincheck',
-                        dataType: 'JSON',
-                        success: function(b) {
-                            // alert(typeof state);
-                            if (b.state == 0) {
-                                alert("用户不存在");
-                            } else {
-                                if (b.state == 1) {
-                                    alert("登陆不成功");
-                                } else {
-                                    alert("登陆成功");
-                                    window.location.href = "/admin/index";
-                                }
-                            }
+                if (_gthis.isAv == true) {
+                    _gthis._getValue();
+                    var allcheck = _gthis._check();
+                    if (allcheck.checkResult == 0) {
+                        var user_msg = $(".user_msg");
+                        for (i = 0; i < user_msg.length; i++) {
+                            user_msg.eq(i).text(allcheck.msg[i].msgValue);
                         }
-                    });
+                    } else {
+                        _gthis.isAv = false;
+                        _gthis.ele.text("登录中");
+                        // ajax
+                        $.ajax({
+                            type: 'POST',
+                            data: _gthis.user,
+                            url: '/admin/logincheck',
+                            dataType: 'JSON',
+                            success: function(b) {
+                                // alert(typeof state);
+                                if (b.state == 0) {
+                                    alert("用户不存在");
+                                    _gthis.ele.text("登录");
+                                } else {
+                                    if (b.state == 1) {
+                                        alert("登陆不成功");
+                                        _gthis.ele.text("登录");
+                                    } else {
+                                        alert("登陆成功");
+                                        _gthis.ele.text("登录成功");
+                                        window.location.href = "/admin/index";
+                                    }
+                                }
+                                _gthis.isAv = true;
+                            }
+                        });
+                    }
                 }
             });
         },

@@ -38,7 +38,7 @@ module.exports = function(mongoose, moment, marked, cheerio) {
         Block.find().sort({
             'uid': 'asc'
         }).exec(function(err, results) {
-            if (results.length != 0) {
+            if (results.length !== 0) {
                 nowuid = results[results.length - 1].uid + 1;
             }
             callback(err, nowuid);
@@ -109,7 +109,7 @@ module.exports = function(mongoose, moment, marked, cheerio) {
     handle = function(html) {
         var $ = cheerio.load(html);
         var table = $("table");
-        for (i = 0; i < table.length; i++) {
+        for (var i = 0; i < table.length; i++) {
             var _thistable = table.eq(i);
             var _thisdefaultlen = _thistable.children('thead').children('tr').children('th').length;
             var _thistr = _thistable.children('tbody').children('tr');
@@ -121,10 +121,10 @@ module.exports = function(mongoose, moment, marked, cheerio) {
                     });
                 }
             }
+            _thistable.after("<div class='tableblock' id='table_" + i + "'></div>");
+            _thistable.remove();
+            $("#table_" + i).append(_thistable);
         }
-
-
-
         return transHref($.html());
     };
 

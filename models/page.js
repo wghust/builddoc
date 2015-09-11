@@ -151,7 +151,8 @@ module.exports = function(mongoose, moment, marked) {
             Page.find({
                 'pageys': 0
             }).sort({
-                'uid': 'desc'
+                'uid': 'desc',
+                'view': 'desc'
             }).exec(function(err, pages) {
                 var back = [];
                 pages.forEach(function(page, index) {
@@ -175,7 +176,8 @@ module.exports = function(mongoose, moment, marked) {
                 'pagetag': tag,
                 'pageys': 0
             }).sort({
-                'uid': 'desc'
+                'uid': 'desc',
+                'view': 'desc'
             }).exec(function(err, pages) {
                 var back = [];
                 pages.forEach(function(page, index) {
@@ -206,7 +208,6 @@ module.exports = function(mongoose, moment, marked) {
             callback(hotpage);
         });
     };
-
 
     return {
         addPage: addPage,

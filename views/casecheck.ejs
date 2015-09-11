@@ -1,0 +1,29 @@
+<% include header_2 %>
+	<style type="text/css">
+	.replydiv {
+		position: relative;
+		margin: 0 auto;
+		width: 400px;
+		height: 100px;
+		background-color: white;
+		padding: 15px;
+		border-radius: 5px;
+		border: 1px solid #B2B2B2;
+	}
+	</style>
+	<div class="container">
+		<div class="replydiv">
+			<% if(isMem == true){%>
+				<% if(state==0) {%>
+				<p>你参与的案例不存在。</p>
+				<% } else if(state == 1) {%>
+					<p>确认成功，请点击查看bug<a href='/case/<%=caseid%>/list'>BUG列表地址</p>
+				<% } else {%>
+					<p>你已经是团队里的人了。请查看地址<a href='/case/<%=caseid%>/list'>BUG列表地址</p>
+				<% } %>
+			<% } else { %>
+				<p>你参与的案例不存在。</p>
+			<% } %>
+		</div>
+	</div>
+<% include footer %>

@@ -1,0 +1,270 @@
+.ctext {
+	border: 1px solid #B2B2B2;
+	padding: 5px 10px;
+	outline: 0;
+	border-radius: 5px;
+	width: 200px;
+}
+.cradio {
+	margin-right: 5px;
+	margin-left: 10px;
+}
+.crate {
+	margin-right: 5px;
+	margin-left: 10px;
+}
+.cbtn {
+	background-image: linear-gradient( #ffffff, #f0f0f0) !important;
+	background-image: -webkit-linear-gradient( #ffffff, #f0f0f0) !important;
+	padding: 5px 10px;
+	border-radius: 5px;
+	border: 1px solid #B2B2B2;
+	cursor: pointer;
+	font-size: 12px;
+	color: black;
+}
+.block .block_con .cbtn {
+	text-decoration: none;
+	color: black;
+	float: left;
+}
+.block .block_con .cbtn:hover {
+	color: black;
+	box-shadow: 0 1px 2px #B2B2B2 inset;
+}
+.block .block_con .cbtn:active {
+	box-shadow: 0 1px 2px #B2B2B2 inset;
+}
+.block .block_top {
+	padding-left: 0;
+}
+
+/*icon*/
+.icon-file-text {
+	border-bottom: 1px solid black;
+	padding-bottom: 10px;
+}
+.icon-spinner9 {
+	display: block;
+	float: left;
+	width: 20px;
+	height: 20px;
+	border-radius: 20px;
+	text-align: center;
+	line-height: 20px;
+	margin-left: 10px;
+	margin-top: 2px;
+	display: none;
+}
+.icon-image {
+	border-bottom: 1px solid black;
+	padding-bottom: 10px;
+}
+
+.queshow {
+	margin-left: 15px;
+	cursor: pointer;
+	position: relative;
+}
+.queshow:hover {
+	/*color: red;*/
+}
+.showmsg {
+	position: absolute;
+	right: -90px;
+	top: 40px;
+	width: 100px;
+	background-color: white;
+	border-radius: 5px;
+	padding: 10px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+	font-size: 14px;
+	display: none;
+	opacity: 0;
+}
+.showmsg:before {
+	content: "";
+	position: absolute;
+	top: -8px;
+	left: 13px;
+	border-bottom: 10px solid white;
+	border-right: 10px solid transparent;
+	border-left: 10px solid transparent;
+	width: 0;
+	height: 0;
+}
+.spin {
+	-webkit-animation: circle 2s linear infinite;
+	-moz-animation: circle 2s linear infinite;
+	animation: circle 2s linear infinite;
+	
+}
+.block .block_con .cpanel {
+	color: black;
+	text-decoration: none;
+}
+.block .block_con .cpanel:hover {
+	color: black;
+}
+.cpanel {
+	position: relative;
+}
+.cpanel .cpanel_s {
+	background-image: linear-gradient( #ffffff, #f0f0f0) !important;
+	background-image: -webkit-linear-gradient( #ffffff, #f0f0f0) !important;
+	padding: 5px 10px;
+	border-radius: 5px;
+	border: 1px solid #B2B2B2;
+	cursor: pointer;
+	font-size: 12px;
+}
+.cpanel ul {
+	position: absolute;
+	top: 50px;
+	left: 0;
+	border: 1px solid #b2b2b2;
+	background-color: white;
+	border-radius: 5px;
+	display: none;
+	opacity: 0;
+	z-index: 5;
+}
+.cpanel ul li {
+	padding: 5px 10px;
+}
+.cpanel ul li:hover {
+	background-color: #4A90E2;
+	color: white;
+}
+#labelleft {
+	float: left;
+}
+.case_step {
+	float: left;
+	width: 400px;
+	height: 100px;
+	resize: none;
+	margin-bottom: 20px;
+}
+.case_result {
+	float: left;
+	width: 400px;
+	height: 50px;
+	resize: none;
+	margin-bottom: 20px;
+}
+.case_trueresult {
+	float: left;
+	width: 400px;
+	height: 50px;
+	resize: none;
+	margin-bottom: 20px;
+}
+.cemail {
+	margin-right: 10px;
+}
+.tblock {
+	width: 80%;
+}
+.tblock .tblock_top {
+	padding: 5px 10px;
+}
+.tblock .tblock_con {
+	margin-top: 20px;
+	padding: 5px 10px;
+	border: 1px solid #b2b2b2;
+	border-radius: 5px;
+}
+.tblock .tblock_con ul {
+	width: 100%;
+}
+.tblock .tblock_con ul li {
+	/*background-color: white;*/
+	padding: 5px 10px 5px 5px;
+	/*border-bottom: 1px solid white;*/
+	cursor: pointer;
+	margin-bottom: 5px;
+}
+.tblock .tblock_con ul li:hover {
+	background-color: white;
+}
+
+.userlist .tblock_con{
+	max-height: 200px;
+	overflow: auto;
+}
+
+.om_delete {
+	float: right;
+}
+.addbug {
+	margin-left: 20px;
+}
+.bug_con {
+	height: 100px;
+	width: 400px;
+	resize: none;
+}
+.addimage {
+	margin-left: 20px;
+}
+.addimage:hover {
+	box-shadow: 0 1px 2px #B2B2B2 inset;
+}
+.bug_left {
+	width: 600px;
+}
+.bug_right {
+	width: 530px;
+}
+.bug_right .block {
+	width: 100%;
+}
+.bug_right .block .block_top {
+	width: 100%;
+}
+.bugimage {
+	display: none;
+}
+.bugimageshow {
+	float: left;
+	min-width: 100px;
+	max-width: 200px;
+	padding: 5px;
+	border: 1px solid #B2B2B2;
+	border-radius: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+.bugtable {
+	width: 95%;
+}
+.emailone {
+	margin-right: 10px;
+}
+/**/
+@-webkit-keyframes circle {
+	0% {
+		-webkit-transform: rotate(0);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+@-moz-keyframes circle {
+	0% {
+		-moz-transform: rotate(0);
+	}
+	100% {
+		-moz-transform: rotate(360deg);
+	}
+}
+@-keyframes circle {
+	0% {
+		transform: rotate(0);
+	}
+	100% {
+		transform: rotate(0);
+	}
+}
