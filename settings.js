@@ -13,7 +13,7 @@ module.exports = {
     service: 'QQ',
     auth: {
         user: "1075296345@qq.com",
-        pass: "12345wang"
+        pass: ""
     },
     qiniu: {
         ACCESS_KEY: 'vqbHkelKrGL2n-Wn_vOX32jP1-QqQ03sxMEQ5AJf',
